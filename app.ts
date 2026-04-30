@@ -1,16 +1,25 @@
-import "reflect-metadata";
-import express, { Request, Response } from "express";
-import { json } from "body-parser";
+import { Application, Request, Response } from "express";
+import express from "express";
 
-const app = express();
-const port = 3000;
+/**
+ * this class configures the server
+ */
+export default class App {
+  public app: Application;
 
-app.use(json());
+  constructor() {
+    this.app = express();
+    this.middlewares();
+    this.routes();
+  }
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello world");
-});
+  private middlewares(): void {
+    this.app.use(express.json());
+  }
 
-app.listen(port, () => {
-  console.log(`Server started at <http://localhost>:${port}`);
-});
+  private routes(): void {
+    this.app.get("/", (req: Request, res: Response) => {
+      return res.send("Hello World");
+    });
+  }
+}

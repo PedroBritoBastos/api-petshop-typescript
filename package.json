@@ -20,6 +20,7 @@
     "start:dev": "ts-node-dev --respawn --transpile-only app.ts",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "migration:generate": "yarn typeorm migration:generate -n",
-    "migration:run": "yarn typeorm migration:run"
+    "migration:run": "yarn typeorm migration:run",
+    "dev": "nodemon --watch src --exec ts-node src/main.ts"
   }
 }
