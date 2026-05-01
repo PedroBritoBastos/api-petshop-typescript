@@ -12,3 +12,6 @@ CREATE TABLE "Client" (
 
 -- CreateIndex
 CREATE INDEX "Client_userId_idx" ON "Client"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Client_email_userId_key" ON "Client"("email", "userId");
