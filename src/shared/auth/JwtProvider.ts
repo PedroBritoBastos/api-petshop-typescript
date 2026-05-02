@@ -1,0 +1,21 @@
+import jwt from "jsonwebtoken";
+
+/**
+ * this class generates a jwt
+ */
+export class JwtProvider {
+  private static secret = process.env.JWT_SECRET;
+
+  public static generateToken(payload: object): string {
+    if (!this.secret) throw new Error("Não há secret.");
+
+    return jwt.sign(payload, this.secret, {
+      expiresIn: "1h",
+    });
+  }
+
+  public static verifyToken(token: string): any {
+    if (!this.secret) throw new Error("Não há secret.");
+    return jwt.verify(token, this.secret);
+  }
+}
