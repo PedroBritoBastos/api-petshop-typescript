@@ -24,3 +24,15 @@ model Client {
   updatedAt DateTime @updatedAt
 
 }
+
+model Pet {
+  id        String   @id @default(uuid())
+  clientId  String
+  name      String
+  age       Int
+  weight    Decimal
+  isAdopted Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
