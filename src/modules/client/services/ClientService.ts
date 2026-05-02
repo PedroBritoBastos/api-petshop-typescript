@@ -31,4 +31,8 @@ export class ClientService {
   async getAll() {
     return this.clientRepository.getAll();
   }
+
+  async deleteById(id: string) {
+    return this.clientRepository.deleteById(id);
+  }
 }

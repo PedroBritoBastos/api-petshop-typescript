@@ -1,4 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import { JwtProvider } from "../../../shared/auth/JwtProvider";
+
+import { TokenPayload } from "../types/TokenPayload";
 
 export class ClientControllerMiddleware {
   public static validateData(req: Request, res: Response, next: NextFunction) {
@@ -17,5 +20,31 @@ export class ClientControllerMiddleware {
     }
 
     return next();
+  }
+
+  public static validateToken(req: Request, res: Response, next: NextFunction) {
+    // recuperando o token do authHeader
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Token não fornecido" });
+    }
+    const [, token] = authHeader.split(" ");
+
+    try {
+      // decodificando o token
+      const decoded: TokenPayload = JwtProvider.verifyToken(
+        token,
+      ) as TokenPayload;
+
+      // verificando se o usuário é o mesmo que está querendo excluir
+      const id = req.params.id as string;
+      if (id && id !== decoded.id) {
+        return res.status(403).json({ message: "Sem autorização" });
+      }
+
+      next();
+    } catch {
+      return res.status(401).json({ message: "Token inválido" });
+    }
   }
 }

@@ -8,6 +8,6 @@ export interface IClientRepository {
   findById(id: string, userId: string): Promise<Client | null>;
   findMany(userId: string): Promise<Client[]>;
   update(id: string, data: UpdateClientDTO): Promise<Client>;
-  delete(id: string, userId: string): Promise<void>;
+  deleteById(id: string): Promise<void>;
   getAll(): Promise<Client[]>;
 }

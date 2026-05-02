@@ -37,4 +37,19 @@ export class ClientController {
       return res.status(400).json({ message: "Erro ao buscar clientes" });
     }
   }
+
+  static async deleteById(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id as string;
+
+    try {
+      await ClientController.clientService.deleteById(id);
+      return res.status(204).send();
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
+
+      return res.status(500).json({ message: "Erro interno" });
+    }
+  }
 }

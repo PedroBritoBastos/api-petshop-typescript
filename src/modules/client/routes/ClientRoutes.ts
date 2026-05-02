@@ -19,5 +19,11 @@ export class ClientRoutes {
       ClientControllerMiddleware.validateData,
       ClientController.create,
     );
+
+    this.router.delete(
+      "/clients/delete/:id",
+      ClientControllerMiddleware.validateToken,
+      ClientController.deleteById,
+    );
   }
 }
