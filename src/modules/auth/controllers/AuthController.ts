@@ -6,11 +6,13 @@ export class AuthController {
   private static authService = new AuthService(new ClientRepository());
 
   static async login(req: Request, res: Response) {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
     try {
-      const result = await AuthController.authService.login(email);
-      return res.json(result);
+      const result = await AuthController.authService.login(email, password);
+      return res
+        .status(200)
+        .json({ message: "usuário logado", usuario: result });
     } catch (error) {
       if (error instanceof Error)
         return res.status(400).json({ message: error.message });
