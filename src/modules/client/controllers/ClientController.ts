@@ -1,37 +1,40 @@
 import { Request, Response } from "express";
 import { Client } from "../../../../generated/prisma/client";
 import { ClientRepository } from "../repositories/ClientRepository";
+import { ClientService } from "../services/ClientService";
 
 export class ClientController {
-  private static clientRepository = new ClientRepository();
+  private static clientService = new ClientService();
 
-  static async create(req: Request, res: Response): Promise<Response> {
-    const { name, email, phone } = req.body;
+  static async create(
+    req: Request,
+    res: Response,
+  ): Promise<Response | undefined> {
+    const { name, email, phone, password } = req.body;
 
     try {
-      const client = await ClientController.clientRepository.create({
+      const result = await ClientController.clientService.create(
         name,
         email,
         phone,
-      });
-      return res.status(201).json(client);
+        password,
+      );
+
+      return res.status(201).json(result);
     } catch (error) {
-      return res.status(400).json({ message: "Erro ao criar cliente" });
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
     }
   }
 
   static async getAll(req: Request, res: Response): Promise<Response> {
     try {
-      const clients: Client[] =
-        await ClientController.clientRepository.getAll();
+      const clients = await ClientController.clientService.getAll();
 
-      return res
-        .status(200)
-        .json({ message: "clientes encontrados:", clients });
+      return res.status(200).json(clients);
     } catch (error) {
-      return res
-        .status(400)
-        .json({ message: "Ocorreu um erro ao buscar clientes" });
+      return res.status(400).json({ message: "Erro ao buscar clientes" });
     }
   }
 }

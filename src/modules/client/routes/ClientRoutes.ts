@@ -15,7 +15,7 @@ export class ClientRoutes {
     this.router.get("/clients", ClientController.getAll);
 
     this.router.post(
-      "/clients",
+      "/clients/register",
       ClientControllerMiddleware.validateData,
       ClientController.create,
     );

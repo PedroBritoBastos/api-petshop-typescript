@@ -7,9 +7,9 @@ export class JwtProvider {
   private static secret = process.env.JWT_SECRET;
 
   public static generateToken(payload: object): string {
-    if (!this.secret) throw new Error("Não há secret.");
+    if (!JwtProvider.secret) throw new Error("Não há secret.");
 
-    return jwt.sign(payload, this.secret, {
+    return jwt.sign(payload, JwtProvider.secret, {
       expiresIn: "1h",
     });
   }

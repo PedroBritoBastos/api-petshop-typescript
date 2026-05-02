@@ -14,8 +14,11 @@ export class ClientRepository implements IClientRepository {
     return client;
   }
 
-  async findByEmail(email: string, userId: string): Promise<Client | null> {
-    throw new Error("Method not implemented.");
+  async findByEmail(email: string): Promise<Client | null> {
+    const client = await prisma.client.findFirst({
+      where: { email },
+    });
+    return client;
   }
 
   async findById(id: string, userId: string): Promise<Client | null> {

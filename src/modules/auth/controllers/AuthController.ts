@@ -1,1 +1,19 @@
-class AuthController {}
+import { ClientRepository } from "../../client/repositories/ClientRepository";
+import { AuthService } from "../services/AuthService";
+import { Request, Response } from "express";
+
+export class AuthController {
+  private static authService = new AuthService(new ClientRepository());
+
+  static async login(req: Request, res: Response) {
+    const { email } = req.body;
+
+    try {
+      const result = await AuthController.authService.login(email);
+      return res.json(result);
+    } catch (error) {
+      if (error instanceof Error)
+        return res.status(400).json({ message: error.message });
+    }
+  }
+}
