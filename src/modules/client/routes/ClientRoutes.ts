@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { ClientController } from "../controllers/ClientController";
 import { ClientControllerMiddleware } from "../middlewares/ClientControllerMiddleware";
-import { Request, Response } from "express";
 
 export class ClientRoutes {
   public router: Router;
