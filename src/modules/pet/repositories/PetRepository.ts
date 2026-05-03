@@ -10,4 +10,22 @@ export class PetRepository implements IPetRepository {
     });
     return pet;
   }
+
+  async deleteById(id: string): Promise<Pet> {
+    const deletedPet = await prisma.pet.delete({
+      where: { id },
+    });
+    return deletedPet;
+  }
+
+  async findById(id: string): Promise<Pet | null> {
+    const pet = await prisma.pet.findUnique({
+      where: { id },
+    });
+    return pet;
+  }
+
+  async getAll(): Promise<Pet[]> {
+    return await prisma.pet.findMany();
+  }
 }

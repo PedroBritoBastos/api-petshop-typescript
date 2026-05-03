@@ -9,4 +9,20 @@ export class PetService {
     const createdPet = await this.petRepository.create(data);
     return createdPet;
   }
+
+  async deleteById(clientId: string, id: string): Promise<Pet> {
+    const pet = await this.petRepository.findById(id);
+    if (!pet) throw new Error("O pet não existe.");
+
+    if (pet.clientId !== clientId)
+      throw Error("O pet não pertence a este cliente.");
+
+    const deletedPet = await this.petRepository.deleteById(id);
+    return deletedPet;
+  }
+
+  async getAll(): Promise<Pet[]> {
+    const pets = await this.petRepository.getAll();
+    return pets;
+  }
 }

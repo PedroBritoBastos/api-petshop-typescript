@@ -11,11 +11,23 @@ export class PetRoutes {
   }
 
   private initialize() {
+    this.router.get(
+      "/pets",
+      PetMiddleware.verifyIfClientIsLogged,
+      PetController.getAll,
+    );
+
     this.router.post(
       "/pets",
       PetMiddleware.verifyIfClientIsLogged,
       PetMiddleware.validateData,
       PetController.create,
+    );
+
+    this.router.delete(
+      "/pets/:id",
+      PetMiddleware.verifyIfClientIsLogged,
+      PetController.deleteById,
     );
   }
 }
