@@ -29,5 +29,11 @@ export class PetRoutes {
       PetMiddleware.verifyIfClientIsLogged,
       PetController.deleteById,
     );
+
+    this.router.put(
+      "/pets/:id",
+      PetMiddleware.verifyIfClientIsLogged,
+      PetController.update,
+    );
   }
 }

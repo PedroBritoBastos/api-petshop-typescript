@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { JwtProvider } from "../../../shared/auth/JwtProvider";
-
 import { TokenPayload } from "../types/TokenPayload";
 
 export class ClientControllerMiddleware {

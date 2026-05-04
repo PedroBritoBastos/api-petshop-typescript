@@ -1,5 +1,6 @@
 import { PetRepository } from "../repositories/PetRepository";
 import { CreatePetDTO } from "../dtos/CreatePetDTO";
+import { UpdatePetDTO } from "../dtos/UpdatePetDTO";
 import { Pet } from "../../../../generated/prisma/client";
 
 export class PetService {
@@ -24,5 +25,13 @@ export class PetService {
   async getAll(): Promise<Pet[]> {
     const pets = await this.petRepository.getAll();
     return pets;
+  }
+
+  async update(id: string, clientId: string, data: UpdatePetDTO): Promise<Pet> {
+    const pet = await this.petRepository.findById(id);
+    if (!pet) throw new Error("Pet não encontrado.");
+    if (pet.clientId !== clientId) throw new Error("Não autorizado.");
+    const updatedPet = await this.petRepository.update(id, data);
+    return updatedPet;
   }
 }

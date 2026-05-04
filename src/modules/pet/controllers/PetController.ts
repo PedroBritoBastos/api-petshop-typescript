@@ -50,4 +50,17 @@ export class PetController {
     const result = await PetController.petService.getAll();
     return res.status(200).json({ message: "Todos os pets:", result });
   }
+
+  static async update(req: Request, res: Response) {
+    try {
+      const clientId = req.user.id;
+      const id = req.params.id as string;
+      const data = req.body;
+      const result = await PetController.petService.update(id, clientId, data);
+      return res.status(200).json({ message: "Pet atualizado:", result });
+    } catch (error) {
+      if (error instanceof Error)
+        return res.status(400).json({ message: error.message });
+    }
+  }
 }

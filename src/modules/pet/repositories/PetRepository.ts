@@ -2,6 +2,7 @@ import { prisma } from "../../../lib/prisma";
 import { Pet } from "../../../../generated/prisma/client";
 import { IPetRepository } from "./IPetRepository";
 import { CreatePetDTO } from "../dtos/CreatePetDTO";
+import { UpdatePetDTO } from "../dtos/UpdatePetDTO";
 
 export class PetRepository implements IPetRepository {
   async create(data: CreatePetDTO): Promise<Pet> {
@@ -27,5 +28,14 @@ export class PetRepository implements IPetRepository {
 
   async getAll(): Promise<Pet[]> {
     return await prisma.pet.findMany();
+  }
+
+  async update(id: string, data: UpdatePetDTO): Promise<Pet> {
+    const updatedPet = await prisma.pet.update({
+      where: { id },
+      data,
+    });
+
+    return updatedPet;
   }
 }

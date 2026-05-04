@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { PetshopService } from "../../../../generated/prisma/client";
 import { PetshopServiceService } from "../services/PetshopServiceService";
 
 export class PetshopServiceController {

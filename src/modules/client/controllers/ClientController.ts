@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { Client } from "../../../../generated/prisma/client";
-import { ClientRepository } from "../repositories/ClientRepository";
 import { ClientService } from "../services/ClientService";
 
 export class ClientController {
