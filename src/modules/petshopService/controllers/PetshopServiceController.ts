@@ -35,4 +35,19 @@ export class PetshopServiceController {
         return res.status(500).json({ message: error.message });
     }
   }
+
+  static async delete(
+    req: Request,
+    res: Response,
+  ): Promise<Response | undefined> {
+    const id = req.params.id as string;
+    try {
+      const result =
+        await PetshopServiceController.petshopServiceService.deleteById(id);
+      return res.status(200).json({ message: "Serviço excluído:", result });
+    } catch (error) {
+      if (error instanceof Error)
+        return res.status(404).json({ message: error.message });
+    }
+  }
 }

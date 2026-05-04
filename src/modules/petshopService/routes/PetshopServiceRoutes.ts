@@ -18,5 +18,7 @@ export class PetshopServiceRoutes {
     );
 
     this.router.get("/petshopServices", PetshopServiceController.getAll);
+
+    this.router.delete("/petshopServices/:id", PetshopServiceController.delete);
   }
 }

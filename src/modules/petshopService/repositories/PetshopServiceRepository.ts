@@ -13,4 +13,18 @@ export class PetshopServiceRepository implements IPetshopServiceRepository {
     const petshopServices = await prisma.petshopService.findMany();
     return petshopServices;
   }
+
+  async getById(id: string): Promise<PetshopService | null> {
+    const petshopService = await prisma.petshopService.findUnique({
+      where: { id },
+    });
+    return petshopService;
+  }
+
+  async deleteById(id: string): Promise<PetshopService> {
+    const deletedPetshopService = await prisma.petshopService.delete({
+      where: { id },
+    });
+    return deletedPetshopService;
+  }
 }
