@@ -16,5 +16,7 @@ export class PetshopServiceRoutes {
       PetshopServiceMiddleware.validateData,
       PetshopServiceController.create,
     );
+
+    this.router.get("/petshopServices", PetshopServiceController.getAll);
   }
 }

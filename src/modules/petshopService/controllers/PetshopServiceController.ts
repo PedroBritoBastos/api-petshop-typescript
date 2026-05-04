@@ -13,11 +13,26 @@ export class PetshopServiceController {
 
     try {
       const data = { clientId, petId, type, executionDate };
-      const result = this.petshopServiceService.create(data);
+      const result =
+        PetshopServiceController.petshopServiceService.create(data);
       return res.status(200).json({ message: "Serviço criado:", result });
     } catch (error) {
       if (error instanceof Error)
         return res.status(402).json({ message: error.message });
+    }
+  }
+
+  static async getAll(
+    req: Request,
+    res: Response,
+  ): Promise<Response | undefined> {
+    try {
+      const result =
+        await PetshopServiceController.petshopServiceService.getAll();
+      return res.status(200).json({ message: "serviços:", result });
+    } catch (error) {
+      if (error instanceof Error)
+        return res.status(500).json({ message: error.message });
     }
   }
 }
