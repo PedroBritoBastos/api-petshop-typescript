@@ -22,7 +22,6 @@ model Client {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
 }
 
 model Pet {
@@ -34,6 +33,17 @@ model Pet {
   isAdopted Boolean
   imageUrl  String
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PetshopService {
+  id        String   @id @default(uuid())
+  clientId  String
+  petId     String
+  type      String
+  executionDate DateTime
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
