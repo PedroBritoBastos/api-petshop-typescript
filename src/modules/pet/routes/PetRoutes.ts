@@ -35,5 +35,11 @@ export class PetRoutes {
       PetMiddleware.verifyIfClientIsLogged,
       PetController.update,
     );
+
+    this.router.put(
+      "/pets/adoption/:id",
+      PetMiddleware.verifyIfClientIsLogged,
+      PetController.adopt,
+    );
   }
 }

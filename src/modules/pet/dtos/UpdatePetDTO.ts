@@ -3,4 +3,5 @@ export interface UpdatePetDTO {
   age?: number;
   weight?: number;
   type?: string;
+  isAdopted?: boolean;
 }

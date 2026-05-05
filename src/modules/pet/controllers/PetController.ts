@@ -63,4 +63,19 @@ export class PetController {
         return res.status(400).json({ message: error.message });
     }
   }
+
+  static async adopt(req: Request, res: Response) {
+    try {
+      const clientId = req.user.id;
+      const id = req.params.id as string;
+      const data = { isAdopted: true };
+      const result = await PetController.petService.update(id, clientId, data);
+      return res
+        .status(200)
+        .json({ message: "Pet adotado com sucesso!:", result });
+    } catch (error) {
+      if (error instanceof Error)
+        return res.status(400).json({ message: error.message });
+    }
+  }
 }

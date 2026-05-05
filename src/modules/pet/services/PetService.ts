@@ -34,4 +34,13 @@ export class PetService {
     const updatedPet = await this.petRepository.update(id, data);
     return updatedPet;
   }
+
+  async adopt(id: string, clientId: string, data: UpdatePetDTO): Promise<Pet> {
+    const pet = await this.petRepository.findById(id);
+    if (!pet) throw new Error("Pet não encontrado.");
+    if (pet.clientId === clientId)
+      throw new Error("Você não pode adotar seu próprio pet.");
+    const updatedPet = await this.petRepository.update(id, data);
+    return updatedPet;
+  }
 }
