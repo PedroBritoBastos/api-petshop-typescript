@@ -21,7 +21,7 @@ export class ClientRepository implements IClientRepository {
     return client;
   }
 
-  async findById(id: string, userId: string): Promise<Client | null> {
+  async findById(id: string): Promise<Client | null> {
     const client = await prisma.client.findUnique({
       where: { id },
     });
@@ -33,7 +33,11 @@ export class ClientRepository implements IClientRepository {
   }
 
   async update(id: string, data: UpdateClientDTO): Promise<Client> {
-    throw new Error("Method not implemented.");
+    const updatedClient = await prisma.client.update({
+      where: { id },
+      data,
+    });
+    return updatedClient;
   }
 
   async deleteById(id: string): Promise<void> {

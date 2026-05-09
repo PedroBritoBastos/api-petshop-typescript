@@ -50,4 +50,21 @@ export class ClientController {
       return res.status(500).json({ message: "Erro interno" });
     }
   }
+
+  static async uploadPhoto(req: Request, res: Response) {
+    const id = req.params.id as string;
+    const file = req.file?.filename;
+    const data = {
+      imageUrl: "",
+    };
+
+    try {
+      await ClientController.clientService.uploadPhoto(id, data);
+      return res.status(200).json({ message: "Foto adicionada com sucesso." });
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
+    }
+  }
 }

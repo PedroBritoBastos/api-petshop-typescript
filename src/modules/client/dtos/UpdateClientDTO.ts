@@ -3,4 +3,5 @@ export interface UpdateClientDTO {
   email?: string;
   phone?: string;
   cpf?: string;
+  imageUrl?: string;
 }

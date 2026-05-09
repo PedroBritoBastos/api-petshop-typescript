@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ClientController } from "../controllers/ClientController";
 import { ClientControllerMiddleware } from "../middlewares/ClientControllerMiddleware";
+import { Multer } from "../../../shared/utils/Multer";
 
 export class ClientRoutes {
   public router: Router;
@@ -23,6 +24,13 @@ export class ClientRoutes {
       "/clients/delete/:id",
       ClientControllerMiddleware.validateToken,
       ClientController.deleteById,
+    );
+
+    // single() -> valor do atributo "name" no frontend
+    this.router.post(
+      "/clients/upload/:id",
+      Multer.upload.single("clientPhoto"),
+      ClientController.uploadPhoto,
     );
   }
 }

@@ -1,6 +1,7 @@
 import { ClientRepository } from "../repositories/ClientRepository";
 import { BcryptProvider } from "../../../shared/crypto/BcryptProvider";
 import { JwtProvider } from "../../../shared/auth/JwtProvider";
+import { UpdateClientDTO } from "../dtos/UpdateClientDTO";
 
 export class ClientService {
   private clientRepository = new ClientRepository();
@@ -34,5 +35,11 @@ export class ClientService {
 
   async deleteById(id: string) {
     return this.clientRepository.deleteById(id);
+  }
+
+  async uploadPhoto(id: string, data: UpdateClientDTO) {
+    const client = await this.clientRepository.findById(id);
+    if (!client) throw new Error("O cliente não existe");
+    const updatedClient = await this.clientRepository.update(id, data);
   }
 }
