@@ -1,6 +1,13 @@
 import { Router } from "express";
+
 import { PetController } from "../controllers/PetController";
+
 import { PetMiddleware } from "../middlewares/PetMiddleware";
+
+import { PetService } from "../services/PetService";
+
+import { PetRepository } from "../repositories/PetRepository";
+
 import { Multer } from "../../../shared/utils/Multer";
 
 export class PetRoutes {
@@ -8,46 +15,56 @@ export class PetRoutes {
 
   constructor() {
     this.router = Router();
+
     this.initialize();
   }
 
   private initialize() {
+    // repository
+    const petRepository = new PetRepository();
+
+    // service
+    const petService = new PetService(petRepository);
+
+    // controller
+    const petController = new PetController(petService);
+
     this.router.get(
       "/pets",
       PetMiddleware.verifyIfClientIsLogged,
-      PetController.getAll,
+      petController.getAll.bind(petController),
     );
 
     this.router.post(
       "/pets",
       PetMiddleware.verifyIfClientIsLogged,
       PetMiddleware.validateData,
-      PetController.create,
+      petController.create.bind(petController),
     );
 
     this.router.delete(
       "/pets/:id",
       PetMiddleware.verifyIfClientIsLogged,
-      PetController.deleteById,
+      petController.deleteById.bind(petController),
     );
 
     this.router.put(
       "/pets/:id",
       PetMiddleware.verifyIfClientIsLogged,
-      PetController.update,
+      petController.update.bind(petController),
     );
 
     this.router.put(
       "/pets/adoption/:id",
       PetMiddleware.verifyIfClientIsLogged,
-      PetController.adopt,
+      petController.adopt.bind(petController),
     );
 
     this.router.post(
       "/pets/upload/:id",
       new Multer("src/data/photos/pets").upload.single("petPhoto"),
       PetMiddleware.validadePhotoData,
-      PetController.uploadPhoto,
+      petController.uploadPhoto.bind(petController),
     );
   }
 }
