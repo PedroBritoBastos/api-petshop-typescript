@@ -65,4 +65,14 @@ export class PetshopServiceController {
       }
     }
   }
+
+  async finishService(req: Request, res: Response): Promise<Response> {
+    try {
+      // TO DO - implementar service
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(404).json({ message: error.message });
+      }
+    }
+  }
 }
