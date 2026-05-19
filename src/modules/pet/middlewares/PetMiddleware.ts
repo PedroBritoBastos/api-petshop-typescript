@@ -37,4 +37,16 @@ export class PetMiddleware {
 
     return next();
   }
+
+  public static validadePhotoData(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const file = req.file?.filename;
+    if (!file) {
+      return res.status(400).json({ message: "Foto não enviada." });
+    }
+    return next();
+  }
 }

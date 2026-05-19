@@ -46,6 +46,7 @@ export class PetRoutes {
     this.router.post(
       "/pets/upload/:id",
       new Multer("src/data/photos/pets").upload.single("petPhoto"),
+      PetMiddleware.validadePhotoData,
       PetController.uploadPhoto,
     );
   }

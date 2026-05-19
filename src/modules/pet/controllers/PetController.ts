@@ -83,7 +83,7 @@ export class PetController {
     const id = req.params.id as string;
     const file = req.file?.filename;
     const data = {
-      imageUrl: file,
+      imageUrl: `data/photos/pets/${file}`,
     };
 
     try {
