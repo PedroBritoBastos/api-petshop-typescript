@@ -1,6 +1,13 @@
 import { Router } from "express";
+
 import { ClientController } from "../controllers/ClientController";
+
 import { ClientControllerMiddleware } from "../middlewares/ClientControllerMiddleware";
+
+import { ClientService } from "../services/ClientService";
+
+import { ClientRepository } from "../repositories/ClientRepository";
+
 import { Multer } from "../../../shared/utils/Multer";
 
 export class ClientRoutes {
@@ -12,27 +19,35 @@ export class ClientRoutes {
   }
 
   private initialize() {
-    this.router.get("/clients", ClientController.getAll);
+    // repository
+    const clientRepository = new ClientRepository();
+
+    // service
+    const clientService = new ClientService(clientRepository);
+
+    // controller
+    const clientController = new ClientController(clientService);
+
+    this.router.get("/clients", clientController.getAll.bind(clientController));
 
     this.router.post(
       "/clients/register",
       ClientControllerMiddleware.validateData,
-      ClientController.create,
+      clientController.create.bind(clientController),
     );
 
     this.router.delete(
       "/clients/delete/:id",
       ClientControllerMiddleware.validateToken,
-      ClientController.deleteById,
+      clientController.deleteById.bind(clientController),
     );
 
-    // single() -> valor do atributo "name" no frontend
     this.router.post(
       "/clients/upload/:id",
       new Multer("src/data/photos/users").upload.single("clientPhoto"),
       ClientControllerMiddleware.validateToken,
       ClientControllerMiddleware.validadePhotoData,
-      ClientController.uploadPhoto,
+      clientController.uploadPhoto.bind(clientController),
     );
   }
 }

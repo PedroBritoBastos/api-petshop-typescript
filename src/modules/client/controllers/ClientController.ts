@@ -2,16 +2,13 @@ import { Request, Response } from "express";
 import { ClientService } from "../services/ClientService";
 
 export class ClientController {
-  private static clientService = new ClientService();
+  constructor(private clientService: ClientService) {}
 
-  static async create(
-    req: Request,
-    res: Response,
-  ): Promise<Response | undefined> {
+  async create(req: Request, res: Response): Promise<Response | undefined> {
     const { name, email, phone, password } = req.body;
 
     try {
-      const result = await ClientController.clientService.create(
+      const result = await this.clientService.create(
         name,
         email,
         phone,
@@ -21,49 +18,75 @@ export class ClientController {
       return res.status(201).json(result);
     } catch (error) {
       if (error instanceof Error) {
-        return res.status(400).json({ message: error.message });
+        return res.status(400).json({
+          message: error.message,
+        });
       }
     }
   }
 
-  static async getAll(req: Request, res: Response): Promise<Response> {
+  async getAll(req: Request, res: Response): Promise<Response> {
     try {
-      const clients = await ClientController.clientService.getAll();
+      const clients = await this.clientService.getAll();
 
       return res.status(200).json(clients);
     } catch (error) {
-      return res.status(400).json({ message: "Erro ao buscar clientes" });
+      return res.status(400).json({
+        message: "Erro ao buscar clientes",
+      });
     }
   }
 
-  static async deleteById(req: Request, res: Response): Promise<Response> {
+  async deleteById(req: Request, res: Response): Promise<Response> {
     const id = req.params.id as string;
 
     try {
-      await ClientController.clientService.deleteById(id);
+      await this.clientService.deleteById(id);
+
       return res.status(204).send();
     } catch (error) {
       if (error instanceof Error) {
-        return res.status(400).json({ message: error.message });
+        return res.status(400).json({
+          message: error.message,
+        });
       }
 
-      return res.status(500).json({ message: "Erro interno" });
+      return res.status(500).json({
+        message: "Erro interno",
+      });
     }
   }
 
-  static async uploadPhoto(req: Request, res: Response) {
+  async uploadPhoto(
+    req: Request,
+    res: Response,
+  ): Promise<Response | undefined> {
     const id = req.params.id as string;
+
     const file = req.file?.filename;
+
+    if (!file) {
+      return res.status(400).json({
+        message: "Nenhuma imagem enviada",
+      });
+    }
+
     const data = {
       imageUrl: `/photos/users/${file}`,
     };
 
     try {
-      await ClientController.clientService.uploadPhoto(id, data);
-      return res.status(200).json({ message: "Foto adicionada com sucesso." });
+      await this.clientService.uploadPhoto(id, data);
+
+      return res.status(200).json({
+        message: "Foto adicionada com sucesso.",
+        imageUrl: data.imageUrl,
+      });
     } catch (error) {
       if (error instanceof Error) {
-        return res.status(400).json({ message: error.message });
+        return res.status(400).json({
+          message: error.message,
+        });
       }
     }
   }
