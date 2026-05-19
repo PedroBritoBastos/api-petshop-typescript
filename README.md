@@ -49,6 +49,11 @@ A arquitetura escolhida para este projeto foi a de desenvolvimento em módulos p
   </li>
 
   <li style="display: flex; align-items: center; gap: 8px;">
+    <img src="https://img.shields.io/badge/POST-green" alt="POST">
+    /clients/upload/:id → faz upload de uma foto do cliente
+  </li>
+
+  <li style="display: flex; align-items: center; gap: 8px;">
     <img src="https://img.shields.io/badge/PUT-orange" alt="PUT">
     /clients/:id → atualiza um cliente
   </li>
@@ -84,6 +89,11 @@ A arquitetura escolhida para este projeto foi a de desenvolvimento em módulos p
   <li style="display: flex; align-items: center; gap: 8px;">
     <img src="https://img.shields.io/badge/DELETE-red" alt="DELETE">
     /pets/:id → remove um pet
+  </li>
+
+  <li style="display: flex; align-items: center; gap: 8px;">
+    <img src="https://img.shields.io/badge/POST-green" alt="POST">
+    /pets/upload/:id → faz upload de uma foto do pet
   </li>
 </ul>
 
