@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { PetController } from "../controllers/PetController";
 import { PetMiddleware } from "../middlewares/PetMiddleware";
+import { Multer } from "../../../shared/utils/Multer";
 
 export class PetRoutes {
   public router: Router;
@@ -40,6 +41,12 @@ export class PetRoutes {
       "/pets/adoption/:id",
       PetMiddleware.verifyIfClientIsLogged,
       PetController.adopt,
+    );
+
+    this.router.post(
+      "/pets/upload/:id",
+      new Multer("src/data/photos/pets").upload.single("petPhoto"),
+      PetController.uploadPhoto,
     );
   }
 }

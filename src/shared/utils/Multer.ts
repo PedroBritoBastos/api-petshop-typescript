@@ -4,20 +4,21 @@ import fs from "fs";
 
 export class Multer {
   // retorna a pasta raiz do projeto e junta o caminho para fazer um caminho absoluto
-  private static uploadPath = path.resolve(
-    process.cwd(),
-    "src/data/photos/users",
-  );
+  public uploadPath;
 
-  private static storage = multer.diskStorage({
+  constructor(url: string) {
+    this.uploadPath = path.resolve(process.cwd(), url);
+  }
+
+  private storage = multer.diskStorage({
     destination: (req, file, cb) => {
       // verifica se a pasta existe nesse caminho e cria a pasta caso nao exista
-      if (!fs.existsSync(Multer.uploadPath)) {
-        fs.mkdirSync(Multer.uploadPath, {
+      if (!fs.existsSync(this.uploadPath)) {
+        fs.mkdirSync(this.uploadPath, {
           recursive: true,
         });
       }
-      cb(null, Multer.uploadPath);
+      cb(null, this.uploadPath);
     },
 
     filename: (req, file, cb) => {
@@ -27,8 +28,8 @@ export class Multer {
     },
   });
 
-  public static upload = multer({
-    storage: Multer.storage,
+  public upload = multer({
+    storage: this.storage,
 
     limits: {
       fileSize: 5 * 1024 * 1024,

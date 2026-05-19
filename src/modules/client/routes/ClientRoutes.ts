@@ -29,7 +29,7 @@ export class ClientRoutes {
     // single() -> valor do atributo "name" no frontend
     this.router.post(
       "/clients/upload/:id",
-      Multer.upload.single("clientPhoto"),
+      new Multer("src/data/photos/users").upload.single("clientPhoto"),
       ClientController.uploadPhoto,
     );
   }

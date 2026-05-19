@@ -1,13 +1,17 @@
-import { Client } from "../../../../generated/prisma/client";
 import { CreateClientDTO } from "../dtos/CreateClientDTO";
 import { UpdateClientDTO } from "../dtos/UpdateClientDTO";
+import { ClientResponseDTO } from "../dtos/ClientResponseDTO";
 
 export interface IClientRepository {
-  create(data: CreateClientDTO): Promise<Client>;
-  findByEmail(email: string): Promise<Client | null>;
-  findById(id: string): Promise<Client | null>;
-  findMany(userId: string): Promise<Client[]>;
-  update(id: string, data: UpdateClientDTO): Promise<Client>;
+  create(data: CreateClientDTO): Promise<ClientResponseDTO>;
+
+  findByEmail(email: string): Promise<ClientResponseDTO | null>;
+
+  findById(id: string): Promise<ClientResponseDTO | null>;
+
+  update(id: string, data: UpdateClientDTO): Promise<ClientResponseDTO>;
+
   deleteById(id: string): Promise<void>;
-  getAll(): Promise<Client[]>;
+
+  getAll(): Promise<ClientResponseDTO[]>;
 }

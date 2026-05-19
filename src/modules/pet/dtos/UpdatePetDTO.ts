@@ -4,4 +4,5 @@ export interface UpdatePetDTO {
   weight?: number;
   type?: string;
   isAdopted?: boolean;
+  imageUrl?: string;
 }

@@ -43,4 +43,10 @@ export class PetService {
     const updatedPet = await this.petRepository.update(id, data);
     return updatedPet;
   }
+
+  async uploadPhoto(id: string, data: UpdatePetDTO) {
+    const pet = await this.petRepository.findById(id);
+    if (!pet) throw new Error("Pet não encontrado.");
+    const updatedPet = await this.petRepository.update(id, data);
+  }
 }
