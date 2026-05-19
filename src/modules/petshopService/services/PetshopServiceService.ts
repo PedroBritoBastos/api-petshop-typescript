@@ -1,9 +1,9 @@
-import { PetshopServiceRepository } from "../repositories/PetshopServiceRepository";
-import { CreatePetshopServiceDTO } from "../dtos/CreatePetshopServiceDTO";
 import { PetshopService } from "../../../../generated/prisma/client";
+import { CreatePetshopServiceDTO } from "../dtos/CreatePetshopServiceDTO";
+import { PetshopServiceRepository } from "../repositories/PetshopServiceRepository";
 
 export class PetshopServiceService {
-  private petshopServiceRepository = new PetshopServiceRepository();
+  constructor(private petshopServiceRepository: PetshopServiceRepository) {}
 
   async create(data: CreatePetshopServiceDTO): Promise<PetshopService> {
     return await this.petshopServiceRepository.create(data);
@@ -15,7 +15,11 @@ export class PetshopServiceService {
 
   async deleteById(id: string): Promise<PetshopService> {
     const petshopService = await this.petshopServiceRepository.getById(id);
-    if (!petshopService) throw new Error("Serviço não encontrado.");
+
+    if (!petshopService) {
+      throw new Error("Serviço não encontrado.");
+    }
+
     return await this.petshopServiceRepository.deleteById(id);
   }
 }
