@@ -14,6 +14,11 @@ A arquitetura escolhida para este projeto foi a de desenvolvimento em módulos p
 
 - O banco escolhido foi o SQLite por ser um projeto mais simples e por poder salvar os dados no próprio projeto sem fazer conexão com um banco externo.
 
+- # Entidades
+
+<img width="1052" height="645" alt="image" src="https://github.com/user-attachments/assets/c3631651-f504-40a9-917d-724b1549ad71" />
+
+
 # Como usar o projeto
 
 - use: git clone <nome do repositório> main
