@@ -28,6 +28,6 @@ export class AuthService {
       email: client.email,
     });
 
-    return { client, token };
+    return { clientId: client.id, token };
   }
 }

@@ -30,6 +30,8 @@ export class ClientRoutes {
     this.router.post(
       "/clients/upload/:id",
       new Multer("src/data/photos/users").upload.single("clientPhoto"),
+      ClientControllerMiddleware.validateToken,
+      ClientControllerMiddleware.validadePhotoData,
       ClientController.uploadPhoto,
     );
   }

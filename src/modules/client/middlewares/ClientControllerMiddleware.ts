@@ -21,6 +21,19 @@ export class ClientControllerMiddleware {
     return next();
   }
 
+  public static validadePhotoData(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const file = req.file?.filename;
+    if (!file) {
+      return res.status(400).json({ message: "Nenhuma imagem enviada." });
+    }
+
+    return next();
+  }
+
   public static validateToken(req: Request, res: Response, next: NextFunction) {
     // recuperando o token do authHeader
     const authHeader = req.headers.authorization;

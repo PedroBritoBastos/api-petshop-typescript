@@ -55,7 +55,7 @@ export class ClientController {
     const id = req.params.id as string;
     const file = req.file?.filename;
     const data = {
-      imageUrl: "",
+      imageUrl: `/photos/users/${file}`,
     };
 
     try {

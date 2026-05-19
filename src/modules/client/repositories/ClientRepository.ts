@@ -3,6 +3,7 @@ import { UpdateClientDTO } from "../dtos/UpdateClientDTO";
 import { ClientResponseDTO } from "../dtos/ClientResponseDTO";
 import { IClientRepository } from "./IClientRepository";
 import { prisma } from "../../../lib/prisma";
+import { Client } from "../../../../generated/prisma/client";
 
 export class ClientRepository implements IClientRepository {
   async getAll(): Promise<ClientResponseDTO[]> {
@@ -13,6 +14,7 @@ export class ClientRepository implements IClientRepository {
         email: true,
         phone: true,
         cpf: true,
+        imageUrl: true,
       },
     });
   }
@@ -26,21 +28,13 @@ export class ClientRepository implements IClientRepository {
         email: true,
         phone: true,
         cpf: true,
+        imageUrl: true,
       },
     });
   }
 
-  async findByEmail(email: string): Promise<ClientResponseDTO | null> {
-    return await prisma.client.findFirst({
-      where: { email },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        cpf: true,
-      },
-    });
+  async findByEmail(email: string): Promise<Client | null> {
+    return await prisma.client.findFirst({ where: { email } });
   }
 
   async findById(id: string): Promise<ClientResponseDTO | null> {
@@ -52,6 +46,7 @@ export class ClientRepository implements IClientRepository {
         email: true,
         phone: true,
         cpf: true,
+        imageUrl: true,
       },
     });
   }
@@ -66,6 +61,7 @@ export class ClientRepository implements IClientRepository {
         email: true,
         phone: true,
         cpf: true,
+        imageUrl: true,
       },
     });
   }
