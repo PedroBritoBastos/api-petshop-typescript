@@ -18,6 +18,10 @@ A arquitetura escolhida para este projeto foi a de desenvolvimento em módulos p
 
 <img width="1052" height="645" alt="image" src="https://github.com/user-attachments/assets/c3631651-f504-40a9-917d-724b1549ad71" />
 
+# Fluxos
+
+<img width="1677" height="510" alt="image" src="https://github.com/user-attachments/assets/9fdd5433-2187-451d-aec4-df4dfcdf7c58" />
+
 
 # Como usar o projeto
 
