@@ -1,13 +1,8 @@
 import { Router } from "express";
-
 import { ClientController } from "../controllers/ClientController";
-
 import { ClientControllerMiddleware } from "../middlewares/ClientControllerMiddleware";
-
 import { ClientService } from "../services/ClientService";
-
 import { ClientRepository } from "../repositories/ClientRepository";
-
 import { Multer } from "../../../shared/utils/Multer";
 
 export class ClientRoutes {
