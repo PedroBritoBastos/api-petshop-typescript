@@ -8,6 +8,7 @@ export class ClientRepository implements IClientRepository {
   async getAll(): Promise<ClientResponseDTO[]> {
     return await prisma.client.findMany({
       select: {
+        id: true,
         name: true,
         email: true,
         phone: true,
@@ -20,6 +21,7 @@ export class ClientRepository implements IClientRepository {
     return await prisma.client.create({
       data,
       select: {
+        id: true,
         name: true,
         email: true,
         phone: true,
@@ -32,6 +34,7 @@ export class ClientRepository implements IClientRepository {
     return await prisma.client.findFirst({
       where: { email },
       select: {
+        id: true,
         name: true,
         email: true,
         phone: true,
@@ -44,6 +47,7 @@ export class ClientRepository implements IClientRepository {
     return await prisma.client.findUnique({
       where: { id },
       select: {
+        id: true,
         name: true,
         email: true,
         phone: true,
@@ -57,6 +61,7 @@ export class ClientRepository implements IClientRepository {
       where: { id },
       data,
       select: {
+        id: true,
         name: true,
         email: true,
         phone: true,
