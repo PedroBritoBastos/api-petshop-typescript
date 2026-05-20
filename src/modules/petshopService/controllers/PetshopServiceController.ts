@@ -13,6 +13,7 @@ export class PetshopServiceController {
         petId,
         type,
         executionDate,
+        finished: false,
       };
 
       const result = await this.petshopServiceService.create(data);
@@ -66,9 +67,12 @@ export class PetshopServiceController {
     }
   }
 
-  async finishService(req: Request, res: Response): Promise<Response> {
+  async finishService(req: Request, res: Response): Promise<Response | undefined> {
     try {
-      // TO DO - implementar service
+      const id = req.params.id as string;
+      const data = req.body;
+      const finishedPetshopService = await this.petshopServiceService.finishService(id, data);
+      return res.status(200).json({ message: "Serviço finalizado com sucesso.", service: finishedPetshopService });
     } catch (error) {
       if (error instanceof Error) {
         return res.status(404).json({ message: error.message });

@@ -3,4 +3,5 @@ export interface CreatePetshopServiceDTO {
   petId: string;
   type: string;
   executionDate: Date;
+  finished: boolean;
 }

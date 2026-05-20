@@ -9,7 +9,6 @@ export class PetshopServiceRoutes {
 
   constructor() {
     this.router = Router();
-
     this.initialize();
   }
 
@@ -18,29 +17,17 @@ export class PetshopServiceRoutes {
     const petshopServiceRepository = new PetshopServiceRepository();
 
     // service
-    const petshopServiceService = new PetshopServiceService(
-      petshopServiceRepository,
-    );
+    const petshopServiceService = new PetshopServiceService(petshopServiceRepository);
 
     // controller
-    const petshopServiceController = new PetshopServiceController(
-      petshopServiceService,
-    );
+    const petshopServiceController = new PetshopServiceController(petshopServiceService);
 
-    this.router.post(
-      "/petshopServices",
-      PetshopServiceMiddleware.validateData,
-      petshopServiceController.create.bind(petshopServiceController),
-    );
+    this.router.post("/petshopServices", PetshopServiceMiddleware.validateData, petshopServiceController.create.bind(petshopServiceController));
 
-    this.router.get(
-      "/petshopServices",
-      petshopServiceController.getAll.bind(petshopServiceController),
-    );
+    this.router.get("/petshopServices", petshopServiceController.getAll.bind(petshopServiceController));
 
-    this.router.delete(
-      "/petshopServices/:id",
-      petshopServiceController.delete.bind(petshopServiceController),
-    );
+    this.router.delete("/petshopServices/:id", petshopServiceController.delete.bind(petshopServiceController));
+
+    this.router.put("/petshopServices/:id", PetshopServiceMiddleware.validateUpdateData, petshopServiceController.finishService.bind(petshopServiceController));
   }
 }

@@ -13,17 +13,21 @@ export class PetshopServiceMiddleware {
     }
 
     if (!type) {
-      return res
-        .status(400)
-        .json({ message: "O tipo de serviço é obrigatório." });
+      return res.status(400).json({ message: "O tipo de serviço é obrigatório." });
     }
 
     if (!executionDate) {
-      return res
-        .status(400)
-        .json({ message: "A data de execução é obrigatória." });
+      return res.status(400).json({ message: "A data de execução é obrigatória." });
     }
 
+    return next();
+  }
+
+  public static validateUpdateData(req: Request, res: Response, next: NextFunction) {
+    const { finished } = req.body;
+    if (!finished) {
+      return res.status(400).json({ message: "Nenhum serviço finalizado." });
+    }
     return next();
   }
 }

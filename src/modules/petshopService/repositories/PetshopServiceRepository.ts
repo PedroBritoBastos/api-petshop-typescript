@@ -2,6 +2,7 @@ import { IPetshopServiceRepository } from "./IPetshopServiceRepository";
 import { CreatePetshopServiceDTO } from "../dtos/CreatePetshopServiceDTO";
 import { prisma } from "../../../lib/prisma";
 import { PetshopService } from "../../../../generated/prisma/client";
+import { UpdatePetshopServiceDTO } from "../dtos/UpdatePetshopServiceDTO";
 
 export class PetshopServiceRepository implements IPetshopServiceRepository {
   async create(data: CreatePetshopServiceDTO): Promise<PetshopService> {
@@ -26,5 +27,16 @@ export class PetshopServiceRepository implements IPetshopServiceRepository {
       where: { id },
     });
     return deletedPetshopService;
+  }
+
+  async update(
+    id: string,
+    data: UpdatePetshopServiceDTO,
+  ): Promise<PetshopService> {
+    const updatedPetshopService = await prisma.petshopService.update({
+      where: { id },
+      data,
+    });
+    return updatedPetshopService;
   }
 }
