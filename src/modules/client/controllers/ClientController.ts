@@ -8,13 +8,7 @@ export class ClientController {
     const { name, email, phone, password } = req.body;
 
     try {
-      const result = await this.clientService.create(
-        name,
-        email,
-        phone,
-        password,
-      );
-
+      const result = await this.clientService.create(name, email, phone, password);
       return res.status(201).json(result);
     } catch (error) {
       if (error instanceof Error) {
@@ -57,10 +51,7 @@ export class ClientController {
     }
   }
 
-  async uploadPhoto(
-    req: Request,
-    res: Response,
-  ): Promise<Response | undefined> {
+  async uploadPhoto(req: Request, res: Response): Promise<Response | undefined> {
     const id = req.params.id as string;
 
     const file = req.file?.filename;

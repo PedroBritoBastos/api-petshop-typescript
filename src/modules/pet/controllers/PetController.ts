@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-
 import { PetService } from "../services/PetService";
 
 export class PetController {
@@ -113,10 +112,7 @@ export class PetController {
     }
   }
 
-  async uploadPhoto(
-    req: Request,
-    res: Response,
-  ): Promise<Response | undefined> {
+  async uploadPhoto(req: Request, res: Response): Promise<Response | undefined> {
     const id = req.params.id as string;
 
     const file = req.file?.filename;

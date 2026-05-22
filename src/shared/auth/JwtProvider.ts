@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request } from "express";
+import "dotenv/config";
 
 /**
  * this class generates a jwt

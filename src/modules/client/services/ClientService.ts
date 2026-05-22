@@ -1,8 +1,6 @@
 import { ClientRepository } from "../repositories/ClientRepository";
-
 import { BcryptProvider } from "../../../shared/crypto/BcryptProvider";
 import { JwtProvider } from "../../../shared/auth/JwtProvider";
-
 import { UpdateClientDTO } from "../dtos/UpdateClientDTO";
 
 export class ClientService {

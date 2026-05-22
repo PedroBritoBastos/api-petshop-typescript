@@ -21,11 +21,7 @@ export class ClientControllerMiddleware {
     return next();
   }
 
-  public static validadePhotoData(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
+  public static validadePhotoData(req: Request, res: Response, next: NextFunction) {
     const file = req.file?.filename;
     if (!file) {
       return res.status(400).json({ message: "Nenhuma imagem enviada." });
@@ -44,9 +40,7 @@ export class ClientControllerMiddleware {
 
     try {
       // decodificando o token
-      const decoded: TokenPayload = JwtProvider.verifyToken(
-        token,
-      ) as TokenPayload;
+      const decoded: TokenPayload = JwtProvider.verifyToken(token) as TokenPayload;
 
       // verificando se o usuário é o mesmo que está querendo excluir
       const id = req.params.id as string;

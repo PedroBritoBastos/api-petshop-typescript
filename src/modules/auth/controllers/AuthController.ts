@@ -10,12 +10,9 @@ export class AuthController {
 
     try {
       const result = await AuthController.authService.login(email, password);
-      return res
-        .status(200)
-        .json({ message: "usuário logado", usuario: result });
+      return res.status(200).json({ message: "usuário logado", usuario: result });
     } catch (error) {
-      if (error instanceof Error)
-        return res.status(400).json({ message: error.message });
+      if (error instanceof Error) return res.status(400).json({ message: error.message });
     }
   }
 }
