@@ -16,16 +16,14 @@ export class AuthService {
     }
 
     // validando a senha
-    const passwordValid = await BcryptProvider.compareHash(
-      password,
-      client.password,
-    );
+    const passwordValid = await BcryptProvider.compareHash(password, client.password);
     if (!passwordValid) throw new Error("Senha inválida.");
 
     // gerando um token de usuario
     const token = JwtProvider.generateToken({
       id: client.id,
       email: client.email,
+      role: client.role,
     });
 
     return { clientId: client.id, token };
