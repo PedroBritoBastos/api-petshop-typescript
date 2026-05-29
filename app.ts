@@ -1,5 +1,6 @@
 import { Application, Request, Response } from "express";
 import express from "express";
+import cors from "cors";
 
 import { ClientRoutes } from "./src/modules/client/routes/ClientRoutes";
 import { AuthRoutes } from "./src/modules/auth/routes/AuthRoutes";
@@ -14,8 +15,7 @@ export default class App {
   private clientRoutes: ClientRoutes = new ClientRoutes();
   private authRoutes: AuthRoutes = new AuthRoutes();
   private petRoutes: PetRoutes = new PetRoutes();
-  private petshopServiceRoutes: PetshopServiceRoutes =
-    new PetshopServiceRoutes();
+  private petshopServiceRoutes: PetshopServiceRoutes = new PetshopServiceRoutes();
 
   constructor() {
     this.app = express();
@@ -24,6 +24,11 @@ export default class App {
   }
 
   private middlewares(): void {
+    this.app.use(
+      cors({
+        origin: "http://localhost:4200",
+      }),
+    );
     this.app.use(express.json());
   }
 

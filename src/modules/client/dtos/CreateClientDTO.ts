@@ -4,4 +4,5 @@ export interface CreateClientDTO {
   phone?: string;
   cpf?: string;
   password: string;
+  role: string;
 }

@@ -20,6 +20,7 @@ export class ClientService {
       email,
       phone,
       password: hashedPassword,
+      role: "user",
     });
 
     const token = JwtProvider.generateToken({
