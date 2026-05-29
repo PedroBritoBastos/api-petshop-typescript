@@ -6,7 +6,7 @@ import { UpdateClientDTO } from "../dtos/UpdateClientDTO";
 export class ClientService {
   constructor(private clientRepository: ClientRepository) {}
 
-  async create(name: string, email: string, phone: string, password: string) {
+  async create(name: string, email: string, phone: string, password: string, cpf: string) {
     const client = await this.clientRepository.findByEmail(email);
 
     if (client) {
@@ -19,6 +19,7 @@ export class ClientService {
       name,
       email,
       phone,
+      cpf,
       password: hashedPassword,
       role: "user",
     });

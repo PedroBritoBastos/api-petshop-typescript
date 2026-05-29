@@ -4,7 +4,7 @@ import { TokenPayload } from "../types/TokenPayload";
 
 export class ClientControllerMiddleware {
   public static validateData(req: Request, res: Response, next: NextFunction) {
-    const { name, email, password } = req.body;
+    const { name, email, password, cpf } = req.body;
 
     if (!name) {
       return res.status(400).json({ message: "O nome é obrigatório." });
@@ -12,6 +12,10 @@ export class ClientControllerMiddleware {
 
     if (!email) {
       return res.status(400).json({ message: "O email é obrigatório." });
+    }
+
+    if (!cpf) {
+      return res.status(400).json({ message: "O cpf é obrigatório." });
     }
 
     if (!password) {
