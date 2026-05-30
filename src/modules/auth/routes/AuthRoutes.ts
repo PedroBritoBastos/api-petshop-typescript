@@ -11,10 +11,8 @@ export class AuthRoutes {
   }
 
   private initialize() {
-    this.router.post(
-      "/auth/login",
-      AuthControllerMiddleware.validateData,
-      AuthController.login,
-    );
+    this.router.post("/auth/login", AuthControllerMiddleware.validateData, AuthController.login);
+    this.router.post("/auth/logout", AuthController.logout);
+    this.router.get("/auth/get", AuthController.getLoggedClient);
   }
 }

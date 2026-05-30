@@ -1,6 +1,7 @@
 import { Application, Request, Response } from "express";
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import { ClientRoutes } from "./src/modules/client/routes/ClientRoutes";
 import { AuthRoutes } from "./src/modules/auth/routes/AuthRoutes";
@@ -27,8 +28,10 @@ export default class App {
     this.app.use(
       cors({
         origin: "http://localhost:4200",
+        credentials: true,
       }),
     );
+    this.app.use(cookieParser());
     this.app.use(express.json());
   }
 
