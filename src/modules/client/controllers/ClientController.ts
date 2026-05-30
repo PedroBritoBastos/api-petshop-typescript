@@ -5,10 +5,10 @@ export class ClientController {
   constructor(private clientService: ClientService) {}
 
   async create(req: Request, res: Response): Promise<Response | undefined> {
-    const { name, email, phone, password, cpf } = req.body;
+    const { name, email, phone, password, cpf, role } = req.body;
 
     try {
-      const result = await this.clientService.create(name, email, phone, password, cpf);
+      const result = await this.clientService.create(name, email, phone, password, cpf, role);
       return res.status(201).json(result);
     } catch (error) {
       if (error instanceof Error) {
