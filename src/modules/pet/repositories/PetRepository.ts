@@ -38,4 +38,29 @@ export class PetRepository implements IPetRepository {
 
     return updatedPet;
   }
+
+  async findByIsAdopted(): Promise<Pet[] | null> {
+    return await prisma.pet.findMany({
+      where: {
+        isAdopted: true,
+      },
+    });
+  }
+
+  async findByNotAdopted(): Promise<Pet[] | null> {
+    return await prisma.pet.findMany({
+      where: {
+        isAdopted: false,
+      },
+    });
+  }
+
+  async findByIsAdoptedByClientId(clientId: string): Promise<Pet[] | null> {
+    return await prisma.pet.findMany({
+      where: {
+        adoptionClientId: clientId,
+        isAdopted: true,
+      },
+    });
+  }
 }

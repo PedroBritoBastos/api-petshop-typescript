@@ -5,4 +5,5 @@ export interface UpdatePetDTO {
   type?: string;
   isAdopted?: boolean;
   imageUrl?: string;
+  adoptionClientId?: string;
 }

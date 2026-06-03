@@ -3,11 +3,26 @@ import { JwtProvider } from "../../../shared/auth/JwtProvider";
 import { TokenPayload } from "../../client/types/TokenPayload";
 
 export class PetMiddleware {
-  public static async verifyIfClientIsLogged(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
+  public static async verifyIfIsAdmin(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = JwtProvider.getClientToken(req);
+      const decoded = JwtProvider.verifyToken(token) as TokenPayload;
+
+      if (decoded.role !== "admin") {
+        return res.status(403).json({
+          message: "Acesso negado.",
+        });
+      }
+      (req as any).user = decoded;
+      return next();
+    } catch (error) {
+      return res.status(401).json({
+        message: "Usuário não autenticado",
+      });
+    }
+  }
+
+  public static async verifyIfClientIsLogged(req: Request, res: Response, next: NextFunction) {
     try {
       const token = JwtProvider.getClientToken(req);
       const decoded = JwtProvider.verifyToken(token) as TokenPayload;
@@ -38,11 +53,7 @@ export class PetMiddleware {
     return next();
   }
 
-  public static validadePhotoData(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
+  public static validadePhotoData(req: Request, res: Response, next: NextFunction) {
     const file = req.file?.filename;
     if (!file) {
       return res.status(400).json({ message: "Foto não enviada." });

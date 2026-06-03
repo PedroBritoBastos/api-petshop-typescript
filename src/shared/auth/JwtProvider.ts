@@ -22,9 +22,10 @@ export class JwtProvider {
   }
 
   public static getClientToken(req: Request): string {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) throw new Error("Token não fornecido.");
-    const [, token] = authHeader.split(" ");
+    const token = req.cookies.token;
+    if (!token) {
+      throw new Error("Token não fornecido.");
+    }
     return token;
   }
 }

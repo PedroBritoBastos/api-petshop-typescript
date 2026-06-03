@@ -8,6 +8,11 @@ import { Client } from "../../../../generated/prisma/client";
 export class ClientRepository implements IClientRepository {
   async getAll(): Promise<ClientResponseDTO[]> {
     return await prisma.client.findMany({
+      where: {
+        role: {
+          not: "admin",
+        },
+      },
       select: {
         id: true,
         name: true,

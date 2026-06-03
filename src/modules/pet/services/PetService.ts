@@ -44,14 +44,15 @@ export class PetService {
     return await this.petRepository.update(id, data);
   }
 
-  async adopt(id: string, clientId: string, data: UpdatePetDTO): Promise<Pet> {
+  async adopt(id: string, adoptionClientId: string, data: UpdatePetDTO): Promise<Pet> {
     const pet = await this.petRepository.findById(id);
 
     if (!pet) {
       throw new Error("Pet não encontrado.");
     }
 
-    if (pet.clientId === clientId) {
+    // verificando se o usuário logado está tentando adotar seu próprio pet
+    if (pet.clientId === adoptionClientId) {
       throw new Error("Você não pode adotar seu próprio pet.");
     }
 
@@ -66,5 +67,17 @@ export class PetService {
     }
 
     return await this.petRepository.update(id, data);
+  }
+
+  async getAvailablePets(): Promise<Pet[] | null> {
+    return await this.petRepository.findByNotAdopted();
+  }
+
+  async getAdoptedPets(): Promise<Pet[] | null> {
+    return await this.petRepository.findByIsAdopted();
+  }
+
+  async getAdoptedPetsByClientId(clientId: string): Promise<Pet[] | null> {
+    return await this.petRepository.findByIsAdoptedByClientId(clientId);
   }
 }

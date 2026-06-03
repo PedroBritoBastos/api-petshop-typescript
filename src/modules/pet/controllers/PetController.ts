@@ -6,16 +6,16 @@ export class PetController {
 
   async create(req: Request, res: Response): Promise<Response | undefined> {
     const { name, age, weight } = req.body;
-
     const clientId = req.user.id;
+    const imageUrl = req.file ? `/photos/pets/${req.file.filename}` : "";
 
     const data = {
       clientId,
       name,
-      age,
-      weight,
+      age: Number(age),
+      weight: Number(weight),
       isAdopted: false,
-      imageUrl: "",
+      imageUrl,
     };
 
     try {
@@ -37,9 +37,7 @@ export class PetController {
   async deleteById(req: Request, res: Response): Promise<Response | undefined> {
     try {
       const clientId = req.user.id;
-
       const id = req.params.id as string;
-
       const result = await this.petService.deleteById(clientId, id);
 
       return res.status(200).json({
@@ -67,11 +65,8 @@ export class PetController {
   async update(req: Request, res: Response): Promise<Response | undefined> {
     try {
       const clientId = req.user.id;
-
       const id = req.params.id as string;
-
       const data = req.body;
-
       const result = await this.petService.update(id, clientId, data);
 
       return res.status(200).json({
@@ -89,15 +84,16 @@ export class PetController {
 
   async adopt(req: Request, res: Response): Promise<Response | undefined> {
     try {
-      const clientId = req.user.id;
+      const adoptionClientId = req.user.id; // logged user id
+      const id = req.params.id as string; // pet id
 
-      const id = req.params.id as string;
-
+      // criando DTO
       const data = {
         isAdopted: true,
+        adoptionClientId,
       };
 
-      const result = await this.petService.adopt(id, clientId, data);
+      const result = await this.petService.adopt(id, adoptionClientId, data);
 
       return res.status(200).json({
         message: "Pet adotado com sucesso.",
@@ -114,7 +110,6 @@ export class PetController {
 
   async uploadPhoto(req: Request, res: Response): Promise<Response | undefined> {
     const id = req.params.id as string;
-
     const file = req.file?.filename;
 
     if (!file) {
@@ -133,6 +128,56 @@ export class PetController {
       return res.status(200).json({
         message: "Foto adicionada com sucesso.",
         imageUrl: data.imageUrl,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({
+          message: error.message,
+        });
+      }
+    }
+  }
+
+  async getAvailablePets(req: Request, res: Response): Promise<Response | undefined> {
+    try {
+      const result = await this.petService.getAvailablePets();
+      return res.status(200).json({
+        message: "Pets disponíveis para adoção.",
+        result,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({
+          message: error.message,
+        });
+      }
+    }
+  }
+
+  async getAdoptedPets(req: Request, res: Response): Promise<Response | undefined> {
+    try {
+      const result = await this.petService.getAdoptedPets();
+      return res.status(200).json({
+        message: "Pets adotados.",
+        result,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({
+          message: error.message,
+        });
+      }
+    }
+  }
+
+  async getAdoptedPetsByClientId(req: Request, res: Response): Promise<Response | undefined> {
+    try {
+      const clientId = req.params.clientId as string;
+      const result = await this.petService.getAdoptedPetsByClientId(clientId);
+
+      return res.status(200).json({
+        message: "Pets adotados do cliente.",
+        result,
       });
     } catch (error) {
       if (error instanceof Error) {
