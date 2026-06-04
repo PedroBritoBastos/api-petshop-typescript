@@ -31,6 +31,18 @@ export class ClientController {
     }
   }
 
+  async getById(req: Request, res: Response): Promise<Response> {
+    try {
+      const id = req.params.id as string;
+      const client = await this.clientService.getById(id);
+      return res.status(200).json(client);
+    } catch (error) {
+      return res.status(400).json({
+        message: "Erro ao buscar cliente",
+      });
+    }
+  }
+
   async deleteById(req: Request, res: Response): Promise<Response> {
     const id = req.params.id as string;
 

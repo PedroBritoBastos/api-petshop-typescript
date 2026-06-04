@@ -56,4 +56,8 @@ export class ClientService {
 
     return await this.clientRepository.update(id, data);
   }
+
+  async getById(id: string) {
+    return await this.clientRepository.findById(id);
+  }
 }

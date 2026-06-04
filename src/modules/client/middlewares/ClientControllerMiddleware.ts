@@ -35,26 +35,28 @@ export class ClientControllerMiddleware {
   }
 
   public static validateToken(req: Request, res: Response, next: NextFunction) {
-    // recuperando o token do authHeader
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      return res.status(401).json({ message: "Token não fornecido" });
-    }
-    const [, token] = authHeader.split(" ");
-
     try {
+      // recuperando o token do cookie
+      const token = JwtProvider.getClientToken(req);
+
       // decodificando o token
-      const decoded: TokenPayload = JwtProvider.verifyToken(token) as TokenPayload;
+      const decoded = JwtProvider.verifyToken(token) as TokenPayload;
 
-      // verificando se o usuário é o mesmo que está querendo excluir
+      // verificando se o usuário é o mesmo que está querendo acessar o recurso
       const id = req.params.id as string;
-      if (id && id !== decoded.id) {
-        return res.status(403).json({ message: "Sem autorização" });
-      }
 
-      next();
-    } catch {
-      return res.status(401).json({ message: "Token inválido" });
+      if (id && id !== decoded.id) {
+        console.log(id);
+        console.log(decoded.id);
+        return res.status(403).json({
+          message: "Sem autorização",
+        });
+      }
+      return next();
+    } catch (error) {
+      return res.status(401).json({
+        message: "Token inválido ou não fornecido",
+      });
     }
   }
 }

@@ -25,6 +25,8 @@ export class ClientRoutes {
 
     this.router.get("/clients", clientController.getAll.bind(clientController));
 
+    this.router.get("/clients/:id", ClientControllerMiddleware.validateToken, clientController.getById.bind(clientController));
+
     this.router.post("/clients", ClientControllerMiddleware.validateData, clientController.create.bind(clientController));
 
     this.router.delete("/clients/:id", ClientControllerMiddleware.validateToken, clientController.deleteById.bind(clientController));

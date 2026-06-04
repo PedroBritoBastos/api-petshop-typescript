@@ -30,6 +30,10 @@ export class PetService {
     return await this.petRepository.getAll();
   }
 
+  async getById(petId: string): Promise<Pet | null> {
+    return await this.petRepository.findById(petId);
+  }
+
   async update(id: string, clientId: string, data: UpdatePetDTO): Promise<Pet> {
     const pet = await this.petRepository.findById(id);
 

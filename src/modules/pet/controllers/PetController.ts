@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PetService } from "../services/PetService";
+import "dotenv/config";
 
 export class PetController {
   constructor(private petService: PetService) {}
@@ -7,7 +8,7 @@ export class PetController {
   async create(req: Request, res: Response): Promise<Response | undefined> {
     const { name, age, weight } = req.body;
     const clientId = req.user.id;
-    const imageUrl = req.file ? `/photos/pets/${req.file.filename}` : "";
+    const imageUrl = req.file ? `${process.env.API_URL}/photos/pets/${req.file.filename}` : "";
 
     const data = {
       clientId,
@@ -177,6 +178,24 @@ export class PetController {
 
       return res.status(200).json({
         message: "Pets adotados do cliente.",
+        result,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({
+          message: error.message,
+        });
+      }
+    }
+  }
+
+  async getPetById(req: Request, res: Response): Promise<Response | undefined> {
+    try {
+      const petId = req.params.petId as string;
+      const result = await this.petService.getById(petId);
+
+      return res.status(200).json({
+        message: "Pet:",
         result,
       });
     } catch (error) {

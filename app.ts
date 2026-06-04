@@ -2,6 +2,7 @@ import { Application, Request, Response } from "express";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 import { ClientRoutes } from "./src/modules/client/routes/ClientRoutes";
 import { AuthRoutes } from "./src/modules/auth/routes/AuthRoutes";
@@ -40,6 +41,7 @@ export default class App {
     this.app.use(this.authRoutes.router);
     this.app.use(this.petRoutes.router);
     this.app.use(this.petshopServiceRoutes.router);
+    this.app.use("/photos", express.static(path.resolve("src/data/photos")));
     this.app.get("/", (req: Request, res: Response) => {
       return res.send("Hello World");
     });

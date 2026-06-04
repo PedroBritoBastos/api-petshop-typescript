@@ -37,6 +37,8 @@ export class PetRoutes {
 
     this.router.get("/pets/adopted/:clientId", PetMiddleware.verifyIfClientIsLogged, petController.getAdoptedPetsByClientId.bind(petController));
 
+    this.router.get("/pets/:petId", PetMiddleware.verifyIfClientIsLogged, petController.getPetById.bind(petController));
+
     this.router.post(
       "/pets",
       PetMiddleware.verifyIfClientIsLogged,
