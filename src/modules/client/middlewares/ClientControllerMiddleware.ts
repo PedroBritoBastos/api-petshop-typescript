@@ -46,8 +46,6 @@ export class ClientControllerMiddleware {
       const id = req.params.id as string;
 
       if (id && id !== decoded.id) {
-        console.log(id);
-        console.log(decoded.id);
         return res.status(403).json({
           message: "Sem autorização",
         });
