@@ -29,14 +29,19 @@ export class PetshopServiceRepository implements IPetshopServiceRepository {
     return deletedPetshopService;
   }
 
-  async update(
-    id: string,
-    data: UpdatePetshopServiceDTO,
-  ): Promise<PetshopService> {
+  async update(id: string, data: UpdatePetshopServiceDTO): Promise<PetshopService> {
     const updatedPetshopService = await prisma.petshopService.update({
       where: { id },
       data,
     });
     return updatedPetshopService;
+  }
+
+  async getByClientId(clientId: string): Promise<PetshopService[] | null> {
+    return await prisma.petshopService.findMany({
+      where: {
+        clientId,
+      },
+    });
   }
 }

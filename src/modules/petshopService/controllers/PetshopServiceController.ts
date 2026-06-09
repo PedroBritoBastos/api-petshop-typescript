@@ -79,4 +79,16 @@ export class PetshopServiceController {
       }
     }
   }
+
+  async getClientServices(req: Request, res: Response): Promise<Response | undefined> {
+    try {
+      const clientId = req.params.clientId as string;
+      const services = await this.petshopServiceService.getClientServices(clientId);
+      return res.status(200).json({ message: "Serviços solicitados:", result: services });
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(404).json({ message: error.message });
+      }
+    }
+  }
 }

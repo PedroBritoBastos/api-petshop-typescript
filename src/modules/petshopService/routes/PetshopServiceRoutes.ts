@@ -26,6 +26,8 @@ export class PetshopServiceRoutes {
 
     this.router.get("/petshopServices", petshopServiceController.getAll.bind(petshopServiceController));
 
+    this.router.get("/petshopServices/:clientId", petshopServiceController.getClientServices.bind(petshopServiceController));
+
     this.router.delete("/petshopServices/:id", petshopServiceController.delete.bind(petshopServiceController));
 
     this.router.put("/petshopServices/:id", PetshopServiceMiddleware.validateUpdateData, petshopServiceController.finishService.bind(petshopServiceController));

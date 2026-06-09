@@ -24,12 +24,13 @@ export class PetshopServiceService {
     return await this.petshopServiceRepository.deleteById(id);
   }
 
-  async finishService(
-    id: string,
-    data: UpdatePetshopServiceDTO,
-  ): Promise<PetshopService> {
+  async finishService(id: string, data: UpdatePetshopServiceDTO): Promise<PetshopService> {
     const petshopService = await this.petshopServiceRepository.getById(id);
     if (!petshopService) throw new Error("Serviço não encontrado.");
     return await this.petshopServiceRepository.update(id, data);
+  }
+
+  async getClientServices(clientId: string): Promise<PetshopService[] | null> {
+    return await this.petshopServiceRepository.getByClientId(clientId);
   }
 }
