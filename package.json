@@ -41,6 +41,7 @@
     "migration:generate": "yarn typeorm migration:generate -n",
     "migration:run": "yarn typeorm migration:run",
     "dev": "tsx watch src/main.ts",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   }
 }
