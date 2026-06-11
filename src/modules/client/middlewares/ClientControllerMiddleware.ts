@@ -1,29 +1,37 @@
 import { Request, Response, NextFunction } from "express";
 import { JwtProvider } from "../../../shared/auth/JwtProvider";
 import { TokenPayload } from "../types/TokenPayload";
+import { body, validationResult } from "express-validator";
 
 export class ClientControllerMiddleware {
-  public static validateData(req: Request, res: Response, next: NextFunction) {
-    const { name, email, password, cpf } = req.body;
+  public static validateData = [
+    body("name").notEmpty().withMessage("O nome é obrigatório."),
+    body("email").notEmpty().withMessage("O email é obrigatório.").isEmail().withMessage("Email inválido."),
+    body("cpf").notEmpty().withMessage("O CPF é obrigatório."),
+    body("password")
+      .notEmpty()
+      .withMessage("A senha é obrigatória.")
+      .isStrongPassword({
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("A senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial."),
 
-    if (!name) {
-      return res.status(400).json({ message: "O nome é obrigatório." });
-    }
+    (req: Request, res: Response, next: NextFunction) => {
+      const errors = validationResult(req);
 
-    if (!email) {
-      return res.status(400).json({ message: "O email é obrigatório." });
-    }
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
 
-    if (!cpf) {
-      return res.status(400).json({ message: "O cpf é obrigatório." });
-    }
-
-    if (!password) {
-      return res.status(400).json({ message: "A senha é obrigatória." });
-    }
-
-    return next();
-  }
+      next();
+    },
+  ];
 
   public static validadePhotoData(req: Request, res: Response, next: NextFunction) {
     const file = req.file?.filename;
