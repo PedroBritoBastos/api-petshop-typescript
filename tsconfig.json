@@ -9,6 +9,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "module": "esnext"
+    "module": "esnext",
+    "rootDir": "./src",
+    "outDir": "./dist"
   }
 }
