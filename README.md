@@ -2,6 +2,14 @@
 
 Este projeto é uma API de petshop feita em typescript para fins de estudo. 
 
+# Tecnologias 
+
+- Typescript: para base do código orientado a objetos
+- Express: para lidar com as requisições e rotas
+- Express-validator: para validar dados e criar senha forte
+- Jsonwebtoken (JWT): para criar token de usuário
+- Cookie-parser: para salvar token em cookies
+
 # Arquitetura
 
 A arquitetura escolhida para este projeto foi a de desenvolvimento em módulos para facilitar a separação dos domínios. A estrutura de camadas desse projeto foi feita usando o padrão Repository Pattern:
@@ -13,6 +21,10 @@ A arquitetura escolhida para este projeto foi a de desenvolvimento em módulos p
 # Banco de Dados
 
 - O banco escolhido foi o SQLite por ser um projeto mais simples e por poder salvar os dados no próprio projeto sem fazer conexão com um banco externo.
+
+# ORM
+
+- Prisma: para facilitar a comunicação com o banco de dados.
 
 - # Entidades
 
