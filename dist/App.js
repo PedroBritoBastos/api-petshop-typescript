@@ -7,10 +7,10 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const path_1 = __importDefault(require("path"));
-const ClientRoutes_1 = require("./src/modules/client/routes/ClientRoutes");
-const AuthRoutes_1 = require("./src/modules/auth/routes/AuthRoutes");
-const PetRoutes_1 = require("./src/modules/pet/routes/PetRoutes");
-const PetshopServiceRoutes_1 = require("./src/modules/petshopService/routes/PetshopServiceRoutes");
+const ClientRoutes_1 = require("./modules/client/routes/ClientRoutes");
+const AuthRoutes_1 = require("./modules/auth/routes/AuthRoutes");
+const PetRoutes_1 = require("./modules/pet/routes/PetRoutes");
+const PetshopServiceRoutes_1 = require("./modules/petshopService/routes/PetshopServiceRoutes");
 /**
  * this class configures the server
  */

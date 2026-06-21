@@ -1,4 +1,4 @@
-import App from "../App";
+import App from "./App";
 
 /**
  * this class starts the server

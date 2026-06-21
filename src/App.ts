@@ -4,10 +4,10 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
 
-import { ClientRoutes } from "./src/modules/client/routes/ClientRoutes";
-import { AuthRoutes } from "./src/modules/auth/routes/AuthRoutes";
-import { PetRoutes } from "./src/modules/pet/routes/PetRoutes";
-import { PetshopServiceRoutes } from "./src/modules/petshopService/routes/PetshopServiceRoutes";
+import { ClientRoutes } from "./modules/client/routes/ClientRoutes";
+import { AuthRoutes } from "./modules/auth/routes/AuthRoutes";
+import { PetRoutes } from "./modules/pet/routes/PetRoutes";
+import { PetshopServiceRoutes } from "./modules/petshopService/routes/PetshopServiceRoutes";
 
 /**
  * this class configures the server
