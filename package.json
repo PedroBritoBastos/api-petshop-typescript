@@ -42,6 +42,7 @@
     "migration:run": "yarn typeorm migration:run",
     "dev": "tsx watch src/main.ts",
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node dist/main.js"
   }
 }
