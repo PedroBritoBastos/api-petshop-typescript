@@ -2,14 +2,14 @@
   "compilerOptions": {
     "target": "es2020",
     "strictPropertyInitialization": false,
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "module": "commonjs",
+    "module": "nodenext",
     "rootDir": "./src",
     "outDir": "./dist"
   }
