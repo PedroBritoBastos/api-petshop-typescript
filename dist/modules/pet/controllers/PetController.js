@@ -1,342 +1,196 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-import "dotenv/config";
-var PetController = /** @class */ (function () {
-    function PetController(petService) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PetController = void 0;
+require("dotenv/config");
+class PetController {
+    constructor(petService) {
         this.petService = petService;
     }
-    PetController.prototype.create = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, name, age, weight, clientId, imageUrl, data, result, error_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        _a = req.body, name = _a.name, age = _a.age, weight = _a.weight;
-                        clientId = req.user.id;
-                        imageUrl = req.file ? "".concat(process.env.API_URL, "/photos/pets/").concat(req.file.filename) : "";
-                        data = {
-                            clientId: clientId,
-                            name: name,
-                            age: Number(age),
-                            weight: Number(weight),
-                            isAdopted: false,
-                            imageUrl: imageUrl,
-                        };
-                        _b.label = 1;
-                    case 1:
-                        _b.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.petService.create(data)];
-                    case 2:
-                        result = _b.sent();
-                        return [2 /*return*/, res.status(201).json({
-                                message: "Pet criado com sucesso.",
-                                result: result,
-                            })];
-                    case 3:
-                        error_1 = _b.sent();
-                        if (error_1 instanceof Error) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: error_1.message,
-                                })];
-                        }
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
+    async create(req, res) {
+        const { name, age, weight } = req.body;
+        const clientId = req.user.id;
+        const imageUrl = req.file ? `${process.env.API_URL}/photos/pets/${req.file.filename}` : "";
+        const data = {
+            clientId,
+            name,
+            age: Number(age),
+            weight: Number(weight),
+            isAdopted: false,
+            imageUrl,
+        };
+        try {
+            const result = await this.petService.create(data);
+            return res.status(201).json({
+                message: "Pet criado com sucesso.",
+                result,
             });
-        });
-    };
-    PetController.prototype.deleteById = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var clientId, id, result, error_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        clientId = req.user.id;
-                        id = req.params.id;
-                        return [4 /*yield*/, this.petService.deleteById(clientId, id)];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, res.status(200).json({
-                                message: "Pet excluído com sucesso.",
-                                result: result,
-                            })];
-                    case 2:
-                        error_2 = _a.sent();
-                        if (error_2 instanceof Error) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: error_2.message,
-                                })];
-                        }
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    message: error.message,
+                });
+            }
+        }
+    }
+    async deleteById(req, res) {
+        try {
+            const clientId = req.user.id;
+            const id = req.params.id;
+            const result = await this.petService.deleteById(clientId, id);
+            return res.status(200).json({
+                message: "Pet excluído com sucesso.",
+                result,
             });
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    message: error.message,
+                });
+            }
+        }
+    }
+    async getAll(req, res) {
+        const result = await this.petService.getAll();
+        return res.status(200).json({
+            message: "Todos os pets.",
+            result,
         });
-    };
-    PetController.prototype.getAll = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var result;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.petService.getAll()];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, res.status(200).json({
-                                message: "Todos os pets.",
-                                result: result,
-                            })];
-                }
+    }
+    async update(req, res) {
+        try {
+            const clientId = req.user.id;
+            const id = req.params.id;
+            const data = req.body;
+            const result = await this.petService.update(id, clientId, data);
+            return res.status(200).json({
+                message: "Pet atualizado.",
+                result,
             });
-        });
-    };
-    PetController.prototype.update = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var clientId, id, data, result, error_3;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        clientId = req.user.id;
-                        id = req.params.id;
-                        data = req.body;
-                        return [4 /*yield*/, this.petService.update(id, clientId, data)];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, res.status(200).json({
-                                message: "Pet atualizado.",
-                                result: result,
-                            })];
-                    case 2:
-                        error_3 = _a.sent();
-                        if (error_3 instanceof Error) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: error_3.message,
-                                })];
-                        }
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    message: error.message,
+                });
+            }
+        }
+    }
+    async adopt(req, res) {
+        try {
+            const adoptionClientId = req.user.id; // logged user id
+            const id = req.params.id; // pet id
+            // criando DTO
+            const data = {
+                isAdopted: true,
+                adoptionClientId,
+            };
+            const result = await this.petService.adopt(id, adoptionClientId, data);
+            return res.status(200).json({
+                message: "Pet adotado com sucesso.",
+                result,
             });
-        });
-    };
-    PetController.prototype.adopt = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var adoptionClientId, id, data, result, error_4;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        adoptionClientId = req.user.id;
-                        id = req.params.id;
-                        data = {
-                            isAdopted: true,
-                            adoptionClientId: adoptionClientId,
-                        };
-                        return [4 /*yield*/, this.petService.adopt(id, adoptionClientId, data)];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, res.status(200).json({
-                                message: "Pet adotado com sucesso.",
-                                result: result,
-                            })];
-                    case 2:
-                        error_4 = _a.sent();
-                        if (error_4 instanceof Error) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: error_4.message,
-                                })];
-                        }
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    message: error.message,
+                });
+            }
+        }
+    }
+    async uploadPhoto(req, res) {
+        const id = req.params.id;
+        const file = req.file?.filename;
+        if (!file) {
+            return res.status(400).json({
+                message: "Nenhuma imagem enviada.",
             });
-        });
-    };
-    PetController.prototype.uploadPhoto = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var id, file, data, error_5;
-            var _a;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        id = req.params.id;
-                        file = (_a = req.file) === null || _a === void 0 ? void 0 : _a.filename;
-                        if (!file) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: "Nenhuma imagem enviada.",
-                                })];
-                        }
-                        data = {
-                            imageUrl: "/photos/pets/".concat(file),
-                        };
-                        _b.label = 1;
-                    case 1:
-                        _b.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.petService.uploadPhoto(id, data)];
-                    case 2:
-                        _b.sent();
-                        return [2 /*return*/, res.status(200).json({
-                                message: "Foto adicionada com sucesso.",
-                                imageUrl: data.imageUrl,
-                            })];
-                    case 3:
-                        error_5 = _b.sent();
-                        if (error_5 instanceof Error) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: error_5.message,
-                                })];
-                        }
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
+        }
+        const data = {
+            imageUrl: `/photos/pets/${file}`,
+        };
+        try {
+            await this.petService.uploadPhoto(id, data);
+            return res.status(200).json({
+                message: "Foto adicionada com sucesso.",
+                imageUrl: data.imageUrl,
             });
-        });
-    };
-    PetController.prototype.getAvailablePets = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var result, error_6;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.petService.getAvailablePets()];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, res.status(200).json({
-                                message: "Pets disponíveis para adoção.",
-                                result: result,
-                            })];
-                    case 2:
-                        error_6 = _a.sent();
-                        if (error_6 instanceof Error) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: error_6.message,
-                                })];
-                        }
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    message: error.message,
+                });
+            }
+        }
+    }
+    async getAvailablePets(req, res) {
+        try {
+            const result = await this.petService.getAvailablePets();
+            return res.status(200).json({
+                message: "Pets disponíveis para adoção.",
+                result,
             });
-        });
-    };
-    PetController.prototype.getAdoptedPets = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var result, error_7;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.petService.getAdoptedPets()];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, res.status(200).json({
-                                message: "Pets adotados.",
-                                result: result,
-                            })];
-                    case 2:
-                        error_7 = _a.sent();
-                        if (error_7 instanceof Error) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: error_7.message,
-                                })];
-                        }
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    message: error.message,
+                });
+            }
+        }
+    }
+    async getAdoptedPets(req, res) {
+        try {
+            const result = await this.petService.getAdoptedPets();
+            return res.status(200).json({
+                message: "Pets adotados.",
+                result,
             });
-        });
-    };
-    PetController.prototype.getAdoptedPetsByClientId = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var clientId, result, error_8;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        clientId = req.params.clientId;
-                        return [4 /*yield*/, this.petService.getAdoptedPetsByClientId(clientId)];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, res.status(200).json({
-                                message: "Pets adotados do cliente.",
-                                result: result,
-                            })];
-                    case 2:
-                        error_8 = _a.sent();
-                        if (error_8 instanceof Error) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: error_8.message,
-                                })];
-                        }
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    message: error.message,
+                });
+            }
+        }
+    }
+    async getAdoptedPetsByClientId(req, res) {
+        try {
+            const clientId = req.params.clientId;
+            const result = await this.petService.getAdoptedPetsByClientId(clientId);
+            return res.status(200).json({
+                message: "Pets adotados do cliente.",
+                result,
             });
-        });
-    };
-    PetController.prototype.getPetById = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var petId, result, error_9;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        petId = req.params.petId;
-                        return [4 /*yield*/, this.petService.getById(petId)];
-                    case 1:
-                        result = _a.sent();
-                        return [2 /*return*/, res.status(200).json({
-                                message: "Pet:",
-                                result: result,
-                            })];
-                    case 2:
-                        error_9 = _a.sent();
-                        if (error_9 instanceof Error) {
-                            return [2 /*return*/, res.status(400).json({
-                                    message: error_9.message,
-                                })];
-                        }
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    message: error.message,
+                });
+            }
+        }
+    }
+    async getPetById(req, res) {
+        try {
+            const petId = req.params.petId;
+            const result = await this.petService.getById(petId);
+            return res.status(200).json({
+                message: "Pet:",
+                result,
             });
-        });
-    };
-    return PetController;
-}());
-export { PetController };
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                return res.status(400).json({
+                    message: error.message,
+                });
+            }
+        }
+    }
+}
+exports.PetController = PetController;

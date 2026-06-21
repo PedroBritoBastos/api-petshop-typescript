@@ -1,18 +1,21 @@
-import App from "../App";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const App_1 = __importDefault(require("../App"));
 /**
  * this class starts the server
  */
-var Server = /** @class */ (function () {
-    function Server(port) {
+class Server {
+    constructor(port) {
         this.port = port;
     }
-    Server.prototype.start = function () {
-        var _this = this;
-        var appInstance = new App();
-        appInstance.app.listen(this.port, function () {
-            console.log("Server rodando na porta ".concat(_this.port));
+    start() {
+        const appInstance = new App_1.default();
+        appInstance.app.listen(this.port, () => {
+            console.log(`Server rodando na porta ${this.port}`);
         });
-    };
-    return Server;
-}());
-export default Server;
+    }
+}
+exports.default = Server;

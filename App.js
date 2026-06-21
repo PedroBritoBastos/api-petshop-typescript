@@ -1,42 +1,46 @@
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import path from "path";
-import { ClientRoutes } from "./src/modules/client/routes/ClientRoutes";
-import { AuthRoutes } from "./src/modules/auth/routes/AuthRoutes";
-import { PetRoutes } from "./src/modules/pet/routes/PetRoutes";
-import { PetshopServiceRoutes } from "./src/modules/petshopService/routes/PetshopServiceRoutes";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const path_1 = __importDefault(require("path"));
+const ClientRoutes_1 = require("./src/modules/client/routes/ClientRoutes");
+const AuthRoutes_1 = require("./src/modules/auth/routes/AuthRoutes");
+const PetRoutes_1 = require("./src/modules/pet/routes/PetRoutes");
+const PetshopServiceRoutes_1 = require("./src/modules/petshopService/routes/PetshopServiceRoutes");
 /**
  * this class configures the server
  */
-var App = /** @class */ (function () {
-    function App() {
-        this.clientRoutes = new ClientRoutes();
-        this.authRoutes = new AuthRoutes();
-        this.petRoutes = new PetRoutes();
-        this.petshopServiceRoutes = new PetshopServiceRoutes();
-        this.app = express();
+class App {
+    constructor() {
+        this.clientRoutes = new ClientRoutes_1.ClientRoutes();
+        this.authRoutes = new AuthRoutes_1.AuthRoutes();
+        this.petRoutes = new PetRoutes_1.PetRoutes();
+        this.petshopServiceRoutes = new PetshopServiceRoutes_1.PetshopServiceRoutes();
+        this.app = (0, express_1.default)();
         this.middlewares();
         this.routes();
     }
-    App.prototype.middlewares = function () {
-        this.app.use(cors({
+    middlewares() {
+        this.app.use((0, cors_1.default)({
             origin: "http://localhost:4200",
             credentials: true,
         }));
-        this.app.use(cookieParser());
-        this.app.use(express.json());
-    };
-    App.prototype.routes = function () {
+        this.app.use((0, cookie_parser_1.default)());
+        this.app.use(express_1.default.json());
+    }
+    routes() {
         this.app.use(this.clientRoutes.router);
         this.app.use(this.authRoutes.router);
         this.app.use(this.petRoutes.router);
         this.app.use(this.petshopServiceRoutes.router);
-        this.app.use("/photos", express.static(path.resolve("src/data/photos")));
-        this.app.get("/", function (req, res) {
+        this.app.use("/photos", express_1.default.static(path_1.default.resolve("src/data/photos")));
+        this.app.get("/", (req, res) => {
             return res.send("Hello World");
         });
-    };
-    return App;
-}());
-export default App;
+    }
+}
+exports.default = App;

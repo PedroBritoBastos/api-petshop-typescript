@@ -1,8 +1,9 @@
-var PetshopServiceMiddleware = /** @class */ (function () {
-    function PetshopServiceMiddleware() {
-    }
-    PetshopServiceMiddleware.validateData = function (req, res, next) {
-        var _a = req.body, clientId = _a.clientId, petId = _a.petId, type = _a.type, executionDate = _a.executionDate;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PetshopServiceMiddleware = void 0;
+class PetshopServiceMiddleware {
+    static validateData(req, res, next) {
+        const { clientId, petId, type, executionDate } = req.body;
         if (!clientId) {
             return res.status(400).json({ message: "Sem id do cliente." });
         }
@@ -16,14 +17,13 @@ var PetshopServiceMiddleware = /** @class */ (function () {
             return res.status(400).json({ message: "A data de execução é obrigatória." });
         }
         return next();
-    };
-    PetshopServiceMiddleware.validateUpdateData = function (req, res, next) {
-        var finished = req.body.finished;
+    }
+    static validateUpdateData(req, res, next) {
+        const { finished } = req.body;
         if (!finished) {
             return res.status(400).json({ message: "Nenhum serviço finalizado." });
         }
         return next();
-    };
-    return PetshopServiceMiddleware;
-}());
-export { PetshopServiceMiddleware };
+    }
+}
+exports.PetshopServiceMiddleware = PetshopServiceMiddleware;

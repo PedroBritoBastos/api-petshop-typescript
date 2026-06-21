@@ -1,8 +1,9 @@
-var AuthControllerMiddleware = /** @class */ (function () {
-    function AuthControllerMiddleware() {
-    }
-    AuthControllerMiddleware.validateData = function (req, res, next) {
-        var _a = req.body, email = _a.email, password = _a.password;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AuthControllerMiddleware = void 0;
+class AuthControllerMiddleware {
+    static validateData(req, res, next) {
+        const { email, password } = req.body;
         if (!email) {
             return res.status(400).json({ message: "O email é obrigatório." });
         }
@@ -10,7 +11,6 @@ var AuthControllerMiddleware = /** @class */ (function () {
             return res.status(400).json({ message: "A senha é obrigatória." });
         }
         return next();
-    };
-    return AuthControllerMiddleware;
-}());
-export { AuthControllerMiddleware };
+    }
+}
+exports.AuthControllerMiddleware = AuthControllerMiddleware;

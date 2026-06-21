@@ -1,16 +1,18 @@
-import { Router } from "express";
-import { AuthController } from "../controllers/AuthController";
-import { AuthControllerMiddleware } from "../middlewares/AuthControllerMiddleware";
-var AuthRoutes = /** @class */ (function () {
-    function AuthRoutes() {
-        this.router = Router();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AuthRoutes = void 0;
+const express_1 = require("express");
+const AuthController_1 = require("../controllers/AuthController");
+const AuthControllerMiddleware_1 = require("../middlewares/AuthControllerMiddleware");
+class AuthRoutes {
+    constructor() {
+        this.router = (0, express_1.Router)();
         this.initialize();
     }
-    AuthRoutes.prototype.initialize = function () {
-        this.router.post("/auth/login", AuthControllerMiddleware.validateData, AuthController.login);
-        this.router.post("/auth/logout", AuthController.logout);
-        this.router.get("/auth/get", AuthController.getLoggedClient);
-    };
-    return AuthRoutes;
-}());
-export { AuthRoutes };
+    initialize() {
+        this.router.post("/auth/login", AuthControllerMiddleware_1.AuthControllerMiddleware.validateData, AuthController_1.AuthController.login);
+        this.router.post("/auth/logout", AuthController_1.AuthController.logout);
+        this.router.get("/auth/get", AuthController_1.AuthController.getLoggedClient);
+    }
+}
+exports.AuthRoutes = AuthRoutes;
