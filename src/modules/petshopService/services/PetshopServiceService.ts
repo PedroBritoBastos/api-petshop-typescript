@@ -1,4 +1,4 @@
-import { PetshopService } from "../../../generated/prisma/client";
+import { PetshopService } from "../../../../generated/prisma/client";
 import { CreatePetshopServiceDTO } from "../dtos/CreatePetshopServiceDTO";
 import { PetshopServiceRepository } from "../repositories/PetshopServiceRepository";
 import { UpdatePetshopServiceDTO } from "../dtos/UpdatePetshopServiceDTO";

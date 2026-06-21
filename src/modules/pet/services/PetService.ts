@@ -1,4 +1,4 @@
-import { Pet } from "../../../generated/prisma/client";
+import { Pet } from "../../../../generated/prisma/client";
 
 import { CreatePetDTO } from "../dtos/CreatePetDTO";
 import { UpdatePetDTO } from "../dtos/UpdatePetDTO";

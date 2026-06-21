@@ -3,7 +3,7 @@ import { UpdateClientDTO } from "../dtos/UpdateClientDTO";
 import { ClientResponseDTO } from "../dtos/ClientResponseDTO";
 import { IClientRepository } from "./IClientRepository";
 import { prisma } from "../../../lib/prisma";
-import { Client } from "../../../generated/prisma/client";
+import { Client } from "../../../../generated/prisma/client";
 
 export class ClientRepository implements IClientRepository {
   async getAll(): Promise<ClientResponseDTO[]> {

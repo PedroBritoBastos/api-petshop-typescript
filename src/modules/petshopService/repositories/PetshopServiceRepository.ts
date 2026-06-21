@@ -1,7 +1,7 @@
 import { IPetshopServiceRepository } from "./IPetshopServiceRepository";
 import { CreatePetshopServiceDTO } from "../dtos/CreatePetshopServiceDTO";
 import { prisma } from "../../../lib/prisma";
-import { PetshopService } from "../../../generated/prisma/client";
+import { PetshopService } from "../../../../generated/prisma/client";
 import { UpdatePetshopServiceDTO } from "../dtos/UpdatePetshopServiceDTO";
 
 export class PetshopServiceRepository implements IPetshopServiceRepository {
